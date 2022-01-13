@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Bem vindo a sua pagina favorita de management</h1>
+
+    <h2>Countries List</h2>
+    {% if countries_list %}
+        <ul>
+        {% for country in countries_list %}
+            <li>{{ country.country_name }} - {{ country.country_code }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Countries are available.</p>
+    {% endif %}
+
+    <h2>Regions List</h2>
+
+    {% if regions_list %}
+        <ul>
+        {% for region in regions_list %}
+            <li>{{ region.region_name }} - {{ region.id }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Regions are available.</p>
+    {% endif %}
+
+{% endblock %}
