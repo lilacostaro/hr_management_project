@@ -1,10 +1,253 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Employee Information</h1>
+    <br>
+    <fieldset>
+        <legend>Personal Data</legend>
+        <div class="offset-1 col-12" style="display: grid">
+        <br>
+            <table class="table table-bordered col-12" >
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-7"><strong>Full Name:    </strong>{{ employee.first_name }} {{ employee.last_name }}</td>
+                        <td class="col-5"><strong>Company ID:   </strong>{{ employee.id }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><strong>Email:  </strong>{{ employee.email }}</td>
+                        <td><strong>Phone Number:  </strong>{{ employee.phone_number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Company Data</legend>
+        <div class="offset-1 col-12 " style="display: grid">
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr class="col-12">
+                        <td class="col-4"><strong>Department:  </strong>{{ department.department_name }}</td>
+                        <td class="col-4"><strong>Job:  </strong>{{ job.job_title }}</td>
+                        <td class="col-4"><strong>Level:  </strong>{{ title.title }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr class="col-12">
+                        <td class="col-5"><strong>Hire Date: </strong>{{ employee.hireDate }}</td>
+                        <td class="col-7"><strong>Base Salary: </strong>{{ employee.bringSalary }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr class="col-12">
+                        <td class="col-5"><strong>Manager ID: </strong>{{ employee.manager_id }}</td>
+                        <td class="col-7"><strong>Manager Name: </strong>{{ manager.last_name }}, {{ manager.first_name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Address(es)</legend>
+        <div class="offset-1 col-12" style="display: grid">
+        <br>
+    {% if address %}
+        {% for i in address %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Address: </strong>{{ i.address }}</td>
+                        <td class="col-4"><strong>N°: </strong>{{ i.number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Complement: </strong>{{ i.complement }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Neighborhood: </strong>{{ i.neighborhood }}</td>
+                        <td class="col-4"><strong>CEP: </strong>{{ i.cep }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>City: </strong>{{ i.city }}</td>
+                        <td class="col-4"><strong>State: </strong>{{ i.state }}</td>
+                        <td class="col-4"><strong>Country: </strong>{{ i.country }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-12"><strong>Reference: </strong>{{ i.reference }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-12"><strong>Current: </strong>{{ i.current }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        {% endfor %}
+    {% else %}
+         <p>No address are available for this employee.</p>
+         <button type="button" class="btn btn-secondary"><a href="#"></a>Add Employee Address</button>
+    {% endif %}
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Benefits</legend>
+        <div class="offset-1 col-12">
+        <br>
+        {% if benefits %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Food Voucher Value : </strong>{{ benefits.0.food_voucher }}</td>
+                        <td class="col-4"><strong>Meal Ticket Value: </strong>{{ benefits.0.meal_ticket }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Transportation Voucher: </strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Type:     </strong>{{ benefits.0.transportation_vouchers_type }}</td>
+                        <td class="col-4"><strong>Value:    </strong>{{ benefits.0.transportation_vouchers_value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Apolices Numbers: </strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Health Plan:     </strong>{{ benefits.0.health_plan_number }}</td>
+                        <td class="col-4"><strong>Dental Plan:    </strong>{{ benefits.0.dental_plan }}</td>
+                        <td class="col-4"><strong>Life Insurance:     </strong>{{ benefits.0.life_insurance }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Other Benefits: </strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-2">Snack Break and Snacks: </th>
+                        <th class="col-2">Gym Pass: </th>
+                        <th class="col-2">Free Dressing: </th>
+                        <th class="col-2">Flex Work Hours: </th>
+                        <th class="col-2">Bonus: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-4">{{ benefits.0.snack_break }}</td>
+                        <td class="col-4">{{ benefits.0.gympass }}</td>
+                        <td class="col-4">{{ benefits.0.free_dressing }}</td>
+                        <td class="col-4">{{ benefits.0.flex_work_hours }}</td>
+                        <td class="col-4">{{ benefits.0.pl }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p>No benefits are available for this employee.</p>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Benefits</button>
+        {% endif %}
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Dependent(s)</legend>
+        <div class="offset-1 col-12">
+        <br>
+        {% if dependents %}
+            {% for i in dependents %}
+            {% endfor %}
+        {% else %}
+            <p>No dependents are registered for this employee.</p>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Dependent</button>
+        {% endif %}
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Bank Information</legend>
+        <div class="offset-1 col-12">
+        <br>
+        {% if bank_info %}
+
+        {% else %}
+            <p>No bank information are registered for this employee.</p>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Bank Info</button>
+        {% endif %}
+        </div>
+    </fieldset>
+    <br>
+
+
+{% endblock %}

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Employees</h1>
 
-</body>
-</html>
+    <h2>List of the company active employees</h2>
+
+    <div>
+        <a href="#">
+            <button type="button">Add Employee</button>
+        </a>
+
+    </div>
+    {% if employees_list %}
+        <ul>
+        {% for employee in employees_list %}
+            <li><a href="{% url 'employee_info' employee.id %}">{{ employee.first_name }} {{ employee.last_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Employees are available.</p>
+    {% endif %}
+
+{% endblock %}
