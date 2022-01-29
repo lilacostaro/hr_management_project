@@ -124,14 +124,15 @@ class Dependents(models.Model):
         return f'{self.first_name} {self.last_name} - {self.relationship}'
 
     def age(self):
-        now = timezone.now()
-        birth = self.birth_date
-        age = now - birth
-        return age.years
-
+        today = datetime.now()
+        #yestarday = today - datetime.timedelta(minutes=146)
+        #yestarday_unix_timestemp = int(yestarday.timestamp()) * 1000
+        #yestarday_unix_timestemp = 1640260800000
+        return today
 
 class Banks(models.Model):
     bank_name = models.CharField(max_length=100)
+    bank_id = models.IntegerField()
 
     class Meta:
         db_table = 'banks'

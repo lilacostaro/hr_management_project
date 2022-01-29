@@ -1,23 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Employees</h1>
-
-    <h2>List of the company active employees</h2>
 
     <div>
-        <a href="#">
-            <button type="button">Add Employee</button>
+        <h1 class="col-6" style="display: inline-grid">Employees</h1>
+        <a href="{% url 'add_employee' %}">
+            <button type="button" class="btn btn-secondary col-5">Add Employee</button>
         </a>
-
     </div>
-    {% if employees_list %}
-        <ul>
-        {% for employee in employees_list %}
-            <li><a href="{% url 'employee_info' employee.id %}">{{ employee.first_name }} {{ employee.last_name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No Employees are available.</p>
-    {% endif %}
+    <br>
+
+    <fieldset>
+        <legend>List of the company active employees</legend>
+        <div class="col-12" style="display: grid">
+        <br>
+            {% if employees_list %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th class="col-9">Employee Name</th>
+                        <th class="col-3">View Info</th>
+                    </tr>
+                </thead>
+            </table>
+                {% for employee in employees_list %}
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td class="col-10">{{ employee.first_name }} {{ employee.last_name }}</td>
+                        <td class="col-2"><a href="{% url 'employee_info' employee.id %}" style="align-self: center"><i class="fas fa-book" style="align-self: center"></i></a></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No Employees are available.</p>
+            {% endif %}
+        </div>
+    </fieldset>
+    <br>
+    <fieldset>
 
 {% endblock %}

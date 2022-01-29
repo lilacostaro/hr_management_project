@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import loader
+
+from .forms import (AddEmployeeForm,
+                    AddEmployeeAddressForm)
 
 from .models import (Countries,
                      Regions,
@@ -9,7 +12,10 @@ from .models import (Countries,
                      EmployeeBenefits,
                      Departments,
                      Jobs,
-                     Hierarchy
+                     Hierarchy,
+                     Dependents,
+                     BankInformation,
+                     Banks
                      )
 
 # Create your views here.
@@ -31,11 +37,12 @@ def employeeInfo(request, id):
     employee = get_object_or_404(Employees, pk=id)
     def manager_def():
         if employee.manager_id == None:
-            manager_id = 100
+            manager_id = id
             return manager_id
         else:
             manager_id = employee.manager_id
             return manager_id
+
     address = EmployeeAddress.objects.filter(employee_id=id).values('cep',
                                                                     'address',
                                                                     'complement',
@@ -45,7 +52,8 @@ def employeeInfo(request, id):
                                                                     'state',
                                                                     'country',
                                                                     'reference',
-                                                                    'current')
+                                                                    'current'
+                                                                    )
     benefits = EmployeeBenefits.objects.filter(employee_id=id).values('food_voucher',
                                                                       'meal_ticket',
                                                                       'snack_break',
@@ -58,7 +66,31 @@ def employeeInfo(request, id):
                                                                       'dental_plan',
                                                                       'life_insurance',
                                                                       'pl'
-)
+                                                                      )
+    dependents = Dependents.objects.filter(employee_id=id).values('first_name',
+                                                                  'last_name',
+                                                                  'birth_date',
+                                                                  'active',
+                                                                  'relationship',
+                                                                  'health_plan_number',
+                                                                  'dental_plan',
+                                                                  'life_insurance'
+                                                                  )
+    bank_info = BankInformation.objects.filter(employee_id=id).values('bank',
+                                                                      'branch',
+                                                                      'branch_digite',
+                                                                      'account',
+                                                                      'account_digite',
+                                                                      'bank_id')
+
+    #def bankID():
+        #if bank_info[0]['bank_id'] is None:
+            #bank_id = 0
+            #return bank_id
+        #else:
+            #bank_id = bank_info[0]['bank_id']
+            #return bank_id
+
     manager = get_object_or_404(Employees, id=manager_def())
     department_id = employee.department_id
     department = get_object_or_404(Departments, id=department_id)
@@ -66,6 +98,8 @@ def employeeInfo(request, id):
     job = get_object_or_404(Jobs, id=job_id)
     title_id = employee.title_id
     title = get_object_or_404(Hierarchy, id=title_id)
+
+    #bank = Banks.objects.filter(id=bankID()).values('bank_name', 'bank_id')
     context = {
         'employee': employee,
         'manager': manager,
@@ -73,7 +107,43 @@ def employeeInfo(request, id):
         'job': job,
         'title': title,
         'address': address,
-        'benefits': benefits
+        'benefits': benefits,
+        'dependents': dependents,
+        'bank_info': bank_info,
+        #'bank': bank
         }
 
     return render(request, 'employees/employee_details.html', context)
+
+def addEmployee(request):
+    if request.method == 'POST':
+        form1 = AddEmployeeForm(request.POST)
+
+        if form1.is_valid():
+            form1.save()
+            return redirect('/employees')
+    else:
+        form1 = AddEmployeeForm()
+        return render(request, 'employees/add_employee.html', {'form1': form1})
+
+
+def addEmployeeAddress(request, id):
+    employee = get_object_or_404(Employees, pk=id)
+    employee_id = employee.id
+    if request.method == 'POST':
+        form = AddEmployeeAddressForm(request.POST)
+
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.employee_id = employee_id
+            address.save()
+            return redirect('/employees')
+    else:
+        form = AddEmployeeAddressForm()
+        return render(request, 'employees/forms/address.html', {'form': form, 'employee': employee})
+
+def editPersonalData(request, id):
+    pass
+
+
+

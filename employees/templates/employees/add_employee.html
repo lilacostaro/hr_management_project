@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block title %}Employee Registration{% endblock %}
+
+{% block content %}
+<di class="offset-1 col-8">
+    <h1>Register a new employee</h1>
+    <form method="POST">{% csrf_token %}
+        {{ form1|crispy }}
+        <input type='submit' class="col-12 btn btn-secondary" value="Register Employee">
+    </form>
+</di>
+{% endblock %}

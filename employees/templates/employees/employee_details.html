@@ -4,8 +4,8 @@
     <h1>Employee Information</h1>
     <br>
     <fieldset>
-        <legend>Personal Data</legend>
-        <div class="offset-1 col-12" style="display: grid">
+        <legend class="offset-1">Personal Data</legend>
+        <div class="col-12" style="display: grid">
         <br>
             <table class="table table-bordered col-12" >
                 <thead>
@@ -30,12 +30,13 @@
                     </tr>
                 </tbody>
             </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Edit Employee Personal Info</button>
         </div>
     </fieldset>
     <br>
     <fieldset>
-        <legend>Company Data</legend>
-        <div class="offset-1 col-12 " style="display: grid">
+        <legend class="offset-1">Company Data</legend>
+        <div class="col-12 " style="display: grid">
             <br>
             <table class="table table-bordered">
                 <thead>
@@ -69,12 +70,14 @@
                     </tr>
                 </tbody>
             </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Edit Employee Company Info</button>
         </div>
     </fieldset>
+
     <br>
     <fieldset>
-        <legend>Address(es)</legend>
-        <div class="offset-1 col-12" style="display: grid">
+        <legend class="offset-1">Address(es)</legend>
+        <div class="col-12" style="display: grid">
         <br>
     {% if address %}
         {% for i in address %}
@@ -127,18 +130,21 @@
                     </tr>
                 </tbody>
             </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="/"></a>Edit Employee Address</button>
             <br>
         {% endfor %}
+        <a href="addemployeeaddress/"><button type="button" class="col-12 btn btn-secondary">New Employee Address</button></a>
     {% else %}
          <p>No address are available for this employee.</p>
-         <button type="button" class="btn btn-secondary"><a href="#"></a>Add Employee Address</button>
+
+         <a href="addemployeeaddress/"><button type="button" class="col-12 btn btn-secondary">New Employee Address</button></a>
     {% endif %}
         </div>
     </fieldset>
     <br>
     <fieldset>
-        <legend>Benefits</legend>
-        <div class="offset-1 col-12">
+        <legend class="offset-1">Benefits</legend>
+        <div class="col-12">
         <br>
         {% if benefits %}
             <table class="table table-bordered">
@@ -164,10 +170,16 @@
                 </tbody>
             </table>
             <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-2">Type: </th>
+                        <th class="col-2">Value: </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
-                        <td class="col-4"><strong>Type:     </strong>{{ benefits.0.transportation_vouchers_type }}</td>
-                        <td class="col-4"><strong>Value:    </strong>{{ benefits.0.transportation_vouchers_value }}</td>
+                        <td class="col-4">{{ benefits.0.transportation_vouchers_type }}</td>
+                        <td class="col-4">{{ benefits.0.transportation_vouchers_value }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -179,11 +191,18 @@
                 </tbody>
             </table>
             <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-2">Health Plan: </th>
+                        <th class="col-2">Dental Plan: </th>
+                        <th class="col-2">Life Insurance: </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
-                        <td class="col-4"><strong>Health Plan:     </strong>{{ benefits.0.health_plan_number }}</td>
-                        <td class="col-4"><strong>Dental Plan:    </strong>{{ benefits.0.dental_plan }}</td>
-                        <td class="col-4"><strong>Life Insurance:     </strong>{{ benefits.0.life_insurance }}</td>
+                        <td class="col-4">{{ benefits.0.health_plan_number }}</td>
+                        <td class="col-4">{{ benefits.0.dental_plan }}</td>
+                        <td class="col-4">{{ benefits.0.life_insurance }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -206,28 +225,79 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="col-4">{{ benefits.0.snack_break }}</td>
-                        <td class="col-4">{{ benefits.0.gympass }}</td>
-                        <td class="col-4">{{ benefits.0.free_dressing }}</td>
-                        <td class="col-4">{{ benefits.0.flex_work_hours }}</td>
-                        <td class="col-4">{{ benefits.0.pl }}</td>
+                        <td class="col-2">{{ benefits.0.snack_break }}</td>
+                        <td class="col-2">{{ benefits.0.gympass }}</td>
+                        <td class="col-2">{{ benefits.0.free_dressing }}</td>
+                        <td class="col-2">{{ benefits.0.flex_work_hours }}</td>
+                        <td class="col-2">{{ benefits.0.pl }}</td>
                     </tr>
                 </tbody>
             </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="/"></a>Edit Employee Benefits</button>
         {% else %}
             <p>No benefits are available for this employee.</p>
-            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Benefits</button>
+            <button type="button" class="btn btn-secondary col-12"><a href="/"></a>Add Employee Benefits</button>
         {% endif %}
         </div>
     </fieldset>
     <br>
     <fieldset>
-        <legend>Dependent(s)</legend>
-        <div class="offset-1 col-12">
+        <legend class="offset-1">Dependent(s)</legend>
+        <div class="col-12">
         <br>
         {% if dependents %}
             {% for i in dependents %}
+                <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Dependent Full Name : </strong>{{ i.first_name }} {{ i.last_name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Birth Date : </strong>{{ i.birth_date }}</td>
+                        <td class="col-4"><strong>Active : </strong>{{ i.active }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-4"><strong>Apolices Numbers: </strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-2">Health Plan: </th>
+                        <th class="col-2">Dental Plan: </th>
+                        <th class="col-2">Life Insurance: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-4">{{ i.health_plan_number }}</td>
+                        <td class="col-4">{{ i.dental_plan }}</td>
+                        <td class="col-4">{{ i.life_insurance }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Edit Employee Dependent</button>
+            <br>
+            <br>
+
             {% endfor %}
+        <button type="button" class="btn btn-secondary col-12"><a href="#"></a>New Employee Dependent</button>
         {% else %}
             <p>No dependents are registered for this employee.</p>
             <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Dependent</button>
@@ -236,11 +306,42 @@
     </fieldset>
     <br>
     <fieldset>
-        <legend>Bank Information</legend>
-        <div class="offset-1 col-12">
+        <legend class="offset-1">Bank Information</legend>
+        <div class="col-12">
         <br>
         {% if bank_info %}
-
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+<!--                        <th class="col-2">Bank Name: </th>  -->
+                        <th class="col-2">Bank ID: </th>
+                        <th class="col-2">Branch: </th>
+                        <th class="col-2">Branch Digite: </th>
+                        <th class="col-2">Account: </th>
+                        <th class="col-2">Account Digite: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+ <!--                       <td class="col-2">{{ bank.0.bank_name }}</td>
+                        <td class="col-2">{{ bank.0.bank_id }}</td>  -->
+                        <td class="col-2">{{ bank_info.0.bank_id }}</td>
+                        <td class="col-2">{{ bank_info.0.branch }}</td>
+                        <td class="col-2">{{ bank_info.0.branch_digite }}</td>
+                        <td class="col-2">{{ bank_info.0.account }}</td>
+                        <td class="col-2">{{ bank_info.0.account_digite }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Edit Employee Bank Info</button>
+            <br>
         {% else %}
             <p>No bank information are registered for this employee.</p>
             <button type="button" class="btn btn-secondary col-12"><a href="#"></a>Add Employee Bank Info</button>
